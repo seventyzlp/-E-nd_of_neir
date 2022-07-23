@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://素材/enemy_bullet1.png" type="Texture" id=1]
+[ext_resource path="res://脚本/不可破坏子弹.gd" type="Script" id=2]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "不可破坏子弹",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 20.0998
+
+[node name="不可破坏子弹" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( 0.499999, 0.499999 )
+scale = Vector2( 2.25, 2.25 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -1 )
+scale = Vector2( 0.25, 0.25 )
+frames = SubResource( 1 )
+animation = "不可破坏子弹"
+
+[node name="Area2D" type="Area2D" parent="." groups=["enemy_bullet"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 2 )
