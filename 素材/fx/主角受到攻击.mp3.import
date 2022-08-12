@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/主角受到攻击.mp3-5c3f8ca30678739a1b9190fef83a0698.mp3str"
+
+[deps]
+
+source_file="res://素材/fx/主角受到攻击.mp3"
+dest_files=[ "res://.import/主角受到攻击.mp3-5c3f8ca30678739a1b9190fef83a0698.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

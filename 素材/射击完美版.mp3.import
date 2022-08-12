@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/射击完美版.mp3-bcc8436f9c45c3c1b94897a06b6e5073.mp3str"
+
+[deps]
+
+source_file="res://素材/射击完美版.mp3"
+dest_files=[ "res://.import/射击完美版.mp3-bcc8436f9c45c3c1b94897a06b6e5073.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,8 +1,8 @@
 extends Area2D
 
 var velovity = Vector2(0,1)
-var speed = 20
-var hp = 10
+var speed = rand_range(30,60)
+var hp = 9
 var alive = true
 
 var attack_wait = 0.2
@@ -47,12 +47,12 @@ func _process(delta):
 	if hp <= 0 and alive: # 血量检测
 		$Label.visible = false
 		speed = 0
+		$dead.play()
 		$CollisionShape2D.call_deferred("set_disabled", true)
 		$"Timer_攻击间隔".stop()
 		alive = false
 		start_attack = false
 		hp = 0
-		queue_free()
 		
 	var pan = $"旋转".rotation_degrees + pan_speed * delta
 	$"旋转".rotation_degrees = fmod(pan, 360)
@@ -74,6 +74,7 @@ func _on_VisibilityNotifier2D_screen_exited():
 # 碰撞特效
 func _on_enemy1_area_entered(area):
 	if area.is_in_group("bullet"):
+		$be_hit.play()
 		hp -= 1
 		
 #子弹生成，旋转弹幕
@@ -107,5 +108,7 @@ func _on_Timer_attackwait_timeout():
 func _on_Timer_ChangePattern_timeout():
 	attack_once = true
 	pattern = int(rand_range(1,4))
-	
-	
+func _on_dead_finished():
+	queue_free()
+func _on_be_hit_finished():
+	$be_hit.stop()

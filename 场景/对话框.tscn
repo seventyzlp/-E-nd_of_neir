@@ -1,18 +1,50 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://素材/FZXIANGSU16.TTF" type="DynamicFontData" id=1]
+[ext_resource path="res://脚本/对话框.gd" type="Script" id=2]
+[ext_resource path="res://素材/对话框.png" type="Texture" id=3]
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 1024, 200 )
 
 [sub_resource type="DynamicFont" id=1]
 size = 46
 font_data = ExtResource( 1 )
 
 [node name="对话框" type="CanvasLayer"]
+pause_mode = 2
+script = ExtResource( 2 )
 
-[node name="content" type="Label" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="."]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -112.0
+margin_top = -200.0
+grow_vertical = 0
+custom_styles/panel = SubResource( 2 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 239.0
+margin_top = -183.0
+margin_right = -235.0
+margin_bottom = -20.0
+
+[node name="content" type="Label" parent="VBoxContainer"]
+margin_right = 550.0
+margin_bottom = 47.0
 grow_vertical = 0
 custom_fonts/font = SubResource( 1 )
-text = "张乐平"
+text = "要在此放弃吗？"
+
+[node name="buttons" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 51.0
+margin_right = 550.0
+margin_bottom = 51.0
+
+[connection signal="visibility_changed" from="PanelContainer" to="." method="_on_PanelContainer_visibility_changed"]

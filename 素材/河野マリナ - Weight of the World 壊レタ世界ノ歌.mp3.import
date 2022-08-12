@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/河野マリナ - Weight of the World 壊レタ世界ノ歌.mp3-e34088a732adc8785093ecfc5e78c79c.mp3str"
+
+[deps]
+
+source_file="res://素材/河野マリナ - Weight of the World 壊レタ世界ノ歌.mp3"
+dest_files=[ "res://.import/河野マリナ - Weight of the World 壊レタ世界ノ歌.mp3-e34088a732adc8785093ecfc5e78c79c.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

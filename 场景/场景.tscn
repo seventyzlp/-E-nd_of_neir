@@ -3,14 +3,10 @@
 [ext_resource path="res://素材/background.png" type="Texture" id=1]
 [ext_resource path="res://场景/主角.tscn" type="PackedScene" id=2]
 [ext_resource path="res://脚本/场景.gd" type="Script" id=3]
-[ext_resource path="res://场景/enemy1.tscn" type="PackedScene" id=4]
+[ext_resource path="res://脚本/对话框生成.gd" type="Script" id=4]
 [ext_resource path="res://脚本/enemy_Create.gd" type="Script" id=5]
-[ext_resource path="res://脚本/Path.gd" type="Script" id=6]
-
-[sub_resource type="Curve2D" id=1]
-_data = {
-"points": PoolVector2Array( -1.33484, -4.00452, 1.33484, 4.00452, 481, 40, 28.0316, -78.7555, -28.0316, 78.7555, 132, 116, -30.7013, -62.7375, 30.7013, 62.7375, 122, 233, 0, 0, 0, 0, 247, 283, 0, 0, 0, 0, 450, 288, 0, 0, 0, 0, 809, 285, 9.34388, 70.7465, -9.34388, -70.7465, 942, 168, 98.7781, 48.0542, -98.7781, -48.0542, 819, 73, 0, 0, 0, 0, 529, 41, 0, 0, 0, 0, 497, 39, 0, 0, 0, 0, 481, 40 )
-}
+[ext_resource path="res://场景/对话框2.tscn" type="PackedScene" id=6]
+[ext_resource path="res://素材/河野マリナ - Weight of the World 壊レタ世界ノ歌.mp3" type="AudioStream" id=7]
 
 [node name="场景" type="Node2D"]
 script = ExtResource( 3 )
@@ -28,14 +24,20 @@ script = ExtResource( 5 )
 [node name="Timer_ct" type="Timer" parent="enemy_Create"]
 autostart = true
 
-[node name="Path2D" type="Path2D" parent="enemy_Create"]
-curve = SubResource( 1 )
-script = ExtResource( 6 )
+[node name="music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -0.5
 
-[node name="Timer" type="Timer" parent="enemy_Create/Path2D"]
+[node name="对话框生成" type="Node2D" parent="."]
+script = ExtResource( 4 )
 
-[node name="enemy1" parent="." instance=ExtResource( 4 )]
-position = Vector2( 523, -19 )
+[node name="对话框2" parent="." instance=ExtResource( 6 )]
+pause_mode = 2
+visible = false
 
+[connection signal="Player_back" from="主角" to="enemy_Create" method="_on__Player_back"]
+[connection signal="Player_die" from="主角" to="enemy_Create" method="_on__Player_die"]
+[connection signal="Player_die" from="主角" to="对话框生成" method="_on__Player_die"]
 [connection signal="timeout" from="enemy_Create/Timer_ct" to="enemy_Create" method="_on_Timer_ct_timeout"]
-[connection signal="timeout" from="enemy_Create/Path2D/Timer" to="enemy_Create/Path2D" method="_on_Timer_timeout"]
+[connection signal="finished" from="music" to="." method="_on_music_finished"]
+[connection signal="again" from="对话框2" to="主角" method="_on_2_again"]

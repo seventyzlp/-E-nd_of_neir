@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://脚本/enemy1.gd" type="Script" id=1]
 [ext_resource path="res://素材/FZXIANGSU16.TTF" type="DynamicFontData" id=2]
+[ext_resource path="res://素材/fx/die_1.wav" type="AudioStream" id=3]
+[ext_resource path="res://素材/fx/hit.wav" type="AudioStream" id=4]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 23.5, 8.5 )
@@ -44,8 +46,16 @@ __meta__ = {
 "_editor_description_": ""
 }
 
+[node name="dead" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="be_hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
 [connection signal="area_entered" from="." to="." method="_on_enemy1_area_entered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 [connection signal="timeout" from="Timer_攻击间隔" to="." method="_on_Timer_attackwait_timeout"]
 [connection signal="timeout" from="Timer_攻击结束" to="." method="_on_Timer_attackend_timeout"]
 [connection signal="timeout" from="Timer_转换方式" to="." method="_on_Timer_ChangePattern_timeout"]
+[connection signal="finished" from="dead" to="." method="_on_dead_finished"]
+[connection signal="finished" from="be_hit" to="." method="_on_be_hit_finished"]

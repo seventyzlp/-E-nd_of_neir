@@ -1,20 +1,23 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://素材/main_character.png" type="Texture" id=1]
 [ext_resource path="res://脚本/主角.gd" type="Script" id=2]
 [ext_resource path="res://素材/main_character3.png" type="Texture" id=3]
 [ext_resource path="res://素材/main_character2.png" type="Texture" id=4]
+[ext_resource path="res://素材/fx/fire.wav" type="AudioStream" id=5]
+[ext_resource path="res://素材/fx/die_1.wav" type="AudioStream" id=6]
+[ext_resource path="res://脚本/僚机.gd" type="Script" id=7]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "hp2",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
 "name": "hp1",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "hp2",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 1 ) ],
@@ -30,6 +33,11 @@ height = 40.0
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 12.0
 height = 40.0
+
+[sub_resource type="Curve2D" id=4]
+_data = {
+"points": PoolVector2Array( -200.101, 1.88776, 200.101, -1.88776, 0.444256, 192.01, 0, 0, 0.943856, -187.831, 202.026, -2.36317, 0, 0, 0, 0, 3.5394, -189.978, 0.943856, -193.494, -0.943856, 193.494, -201.977, -3.63664, 0, 0, 0, 0, 0.444256, 192.01 )
+}
 
 [node name="主角" type="KinematicBody2D"]
 scale = Vector2( 0.5, 0.5 )
@@ -49,7 +57,7 @@ position = Vector2( 0, -50 )
 scale = Vector2( 0.5, 0.5 )
 
 [node name="射击延时" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.2
 
 [node name="Area2D" type="Area2D" parent="." groups=["player"]]
 position = Vector2( -2, 0 )
@@ -58,5 +66,25 @@ position = Vector2( -2, 0 )
 position = Vector2( 2, 8 )
 shape = SubResource( 3 )
 
+[node name="attack_music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="be_attacked1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+
+[node name="无敌时间" type="Timer" parent="."]
+wait_time = 0.3
+
+[node name="移动路线" type="Path2D" parent="."]
+position = Vector2( 2, -2 )
+rotation = 3.14159
+curve = SubResource( 4 )
+
+[node name="僚机生成" type="PathFollow2D" parent="移动路线"]
+position = Vector2( 0.444256, 192.01 )
+rotation = -0.0160785
+script = ExtResource( 7 )
+
 [connection signal="timeout" from="射击延时" to="." method="_on__timeout"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="timeout" from="无敌时间" to="." method="_on__timeout_ranbow"]
