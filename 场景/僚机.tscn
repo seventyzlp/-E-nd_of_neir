@@ -1,3 +1,67 @@
-[gd_scene format=2]
+[gd_scene load_steps=8 format=2]
 
-[node name="Node2D" type="Node2D"]
+[ext_resource path="res://素材/main_character3.png" type="Texture" id=1]
+[ext_resource path="res://素材/main_character.png" type="Texture" id=2]
+[ext_resource path="res://素材/main_character2.png" type="Texture" id=3]
+[ext_resource path="res://脚本/僚机本体.gd" type="Script" id=4]
+[ext_resource path="res://素材/fx/主角受到攻击.mp3" type="AudioStream" id=5]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "hp1",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "hp2",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": false,
+"name": "hp3",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 18.0
+height = 48.0
+
+[node name="僚机" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="僚机贴图" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -6 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 1 )
+animation = "hp3"
+
+[node name="Area2D" type="Area2D" parent="." groups=["player"]]
+position = Vector2( 0, -6 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 0, 12 )
+shape = SubResource( 2 )
+
+[node name="射击延时" type="Timer" parent="."]
+process_priority = 1
+wait_time = 0.3
+
+[node name="复活延时" type="Timer" parent="."]
+wait_time = 4.0
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 0, -56 )
+
+[node name="be_attacked" type="Timer" parent="."]
+wait_time = 0.42
+
+[node name="be_attacked2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="timeout" from="射击延时" to="." method="_on__timeout"]
+[connection signal="timeout" from="复活延时" to="." method="_on_reborn_timeout"]
+[connection signal="timeout" from="be_attacked" to="." method="_on_be_attacked_timeout"]

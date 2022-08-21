@@ -1,6 +1,7 @@
 extends Node2D
 
 var enemy1 = preload("res://场景/enemy1.tscn")
+var difficulity = 0
 
 func creat_enemy():
 	var _enemy = Global.instance_node(enemy1, Vector2(rand_range(100, 924), 20), Global.world, global_rotation)

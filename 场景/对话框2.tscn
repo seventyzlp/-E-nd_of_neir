@@ -30,7 +30,7 @@ margin_right = 687.0
 margin_bottom = 558.0
 custom_fonts/font = SubResource( 1 )
 text = "
-即使没有好的结果也要战斗到最后吗？"
+你输了吗？"
 script = ExtResource( 5 )
 
 [node name="Button_yes" type="Button" parent="."]

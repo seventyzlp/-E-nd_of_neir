@@ -6,7 +6,6 @@ var fraktion = 20
 var velocity = Vector2.ZERO
 
 var _bullet = preload("res://场景/子弹.tscn")
-var _talk = preload("res://场景/对话框.tscn")
 var start_shoot = true
 
 var hp = 3
@@ -14,8 +13,8 @@ var dead_times = 0
 signal Player_die # 角色已经死掉信号
 signal Player_back # 角色愿意再战信号
 signal friends # 死亡次数足够，召唤僚机信号
-
-export(PackedScene) var friends_plane # 提前实例化
+signal nofriends
+#export(PackedScene) var friends_plane # 提前实例化
 
 func _physics_process(delta): # 主进程
 	# 移动
@@ -27,7 +26,7 @@ func _physics_process(delta): # 主进程
 		start_shoot = false
 		$"射击延时".start()
 	HP()
-	if dead_times >= 4:
+	if dead_times >= 8:
 		emit_signal("friends") # 死了4次之后触发僚机开始乱杀
 func hero_move(delta):
 	var move = Vector2.ZERO
@@ -73,17 +72,21 @@ func HP():
 	if hp <= 0:
 		dead_times += 1
 		hp = 0
-		 
 		$"贴图".visible = false
 		$Area2D/CollisionShape2D.call_deferred("set_disabled", true)
 		$CollisionShape2D.call_deferred("set_disabled", true) #主角死掉之后禁用碰撞
 		emit_signal("Player_die") # 玩家死亡之后触发死亡事件
+		emit_signal("nofriends")
 	if hp == 1:
 		$"贴图".play("hp1")
 	elif hp == 2:
 		$"贴图".play("hp2")
 	elif hp == 3:
 		$"贴图".play("hp3")
+		if dead_times < 4:
+			emit_signal("nofriends")
+			# print(dead_times)
+		
 func _on_2_again():
 	hp = 3
 	dead_times += 1
@@ -92,8 +95,9 @@ func _on_2_again():
 	$Area2D/CollisionShape2D.call_deferred("set_disabled", false)
 	$CollisionShape2D.call_deferred("set_disabled", false) 
 	emit_signal("Player_back") # 进行一个信号的传递
+	emit_signal("nofriends")
 func _on__timeout_ranbow(): # 解除无敌状态
 	$Area2D/CollisionShape2D.call_deferred("set_disabled", false)
 	$CollisionShape2D.call_deferred("set_disabled", false) 
-#实现死了4次之后触发小飞机环绕效果
+
 

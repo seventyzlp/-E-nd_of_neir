@@ -17,10 +17,6 @@ radius = 20.0998
 [node name="不可破坏子弹" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
-position = Vector2( 0.499999, 0.499999 )
-scale = Vector2( 2.25, 2.25 )
-
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -1 )
 scale = Vector2( 0.25, 0.25 )
@@ -31,3 +27,10 @@ animation = "不可破坏子弹"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 2 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( 0.499999, 0.499999 )
+scale = Vector2( 2.25, 2.25 )
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

@@ -76,6 +76,9 @@ func _on_enemy1_area_entered(area):
 	if area.is_in_group("bullet"):
 		$be_hit.play()
 		hp -= 1
+	elif area.is_in_group("player"):
+		$be_hit.play()
+		hp -= 5
 		
 #子弹生成，旋转弹幕
 func set_spwan():

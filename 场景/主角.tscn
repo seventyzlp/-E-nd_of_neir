@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://素材/main_character.png" type="Texture" id=1]
 [ext_resource path="res://脚本/主角.gd" type="Script" id=2]
@@ -7,6 +7,12 @@
 [ext_resource path="res://素材/fx/fire.wav" type="AudioStream" id=5]
 [ext_resource path="res://素材/fx/die_1.wav" type="AudioStream" id=6]
 [ext_resource path="res://脚本/僚机.gd" type="Script" id=7]
+[ext_resource path="res://场景/僚机.tscn" type="PackedScene" id=8]
+[ext_resource path="res://脚本/僚机生成3.gd" type="Script" id=9]
+[ext_resource path="res://脚本/僚机生成4.gd" type="Script" id=10]
+[ext_resource path="res://脚本/僚机生成5.gd" type="Script" id=11]
+[ext_resource path="res://脚本/僚机生成6.gd" type="Script" id=12]
+[ext_resource path="res://脚本/僚机生成1.gd" type="Script" id=13]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -73,18 +79,78 @@ stream = ExtResource( 5 )
 stream = ExtResource( 6 )
 
 [node name="无敌时间" type="Timer" parent="."]
-wait_time = 0.3
 
 [node name="移动路线" type="Path2D" parent="."]
 position = Vector2( 2, -2 )
 rotation = 3.14159
 curve = SubResource( 4 )
 
-[node name="僚机生成" type="PathFollow2D" parent="移动路线"]
+[node name="僚机4" parent="移动路线" instance=ExtResource( 8 )]
+position = Vector2( 170, -106 )
+rotation = -3.14159
+
+[node name="僚机5" parent="移动路线" instance=ExtResource( 8 )]
+position = Vector2( 170, 100 )
+rotation = -3.14159
+
+[node name="僚机6" parent="移动路线" instance=ExtResource( 8 )]
+position = Vector2( -0.000471592, 192 )
+rotation = -3.14159
+
+[node name="僚机1" parent="移动路线" instance=ExtResource( 8 )]
+position = Vector2( 0.00047648, -182 )
+rotation = -3.14159
+
+[node name="僚机3" parent="移动路线" instance=ExtResource( 8 )]
+position = Vector2( -178, -102 )
+rotation = -3.14159
+
+[node name="僚机2" parent="移动路线" instance=ExtResource( 8 )]
+position = Vector2( -180, 97.9995 )
+rotation = -3.14159
+
+[node name="僚机生成4" type="PathFollow2D" parent="移动路线"]
 position = Vector2( 0.444256, 192.01 )
-rotation = -0.0160785
+rotation = -0.0160864
+script = ExtResource( 10 )
+
+[node name="僚机生成5" type="PathFollow2D" parent="移动路线"]
+position = Vector2( 0.444256, 192.01 )
+rotation = -0.0160864
+script = ExtResource( 11 )
+
+[node name="僚机生成6" type="PathFollow2D" parent="移动路线"]
+position = Vector2( 0.444256, 192.01 )
+rotation = -0.0160864
+script = ExtResource( 12 )
+
+[node name="僚机生成3" type="PathFollow2D" parent="移动路线"]
+position = Vector2( 0.444256, 192.01 )
+rotation = -0.0160864
+script = ExtResource( 9 )
+
+[node name="僚机生成2" type="PathFollow2D" parent="移动路线"]
+position = Vector2( 0.444256, 192.01 )
+rotation = -0.0160864
 script = ExtResource( 7 )
 
+[node name="僚机生成1" type="PathFollow2D" parent="移动路线"]
+position = Vector2( 0.444256, 192.01 )
+rotation = -0.0160864
+script = ExtResource( 13 )
+
+[connection signal="friends" from="." to="移动路线/僚机4" method="_on__friends"]
+[connection signal="friends" from="." to="移动路线/僚机5" method="_on__friends"]
+[connection signal="friends" from="." to="移动路线/僚机6" method="_on__friends"]
+[connection signal="friends" from="." to="移动路线/僚机1" method="_on__friends"]
+[connection signal="friends" from="." to="移动路线/僚机3" method="_on__friends"]
+[connection signal="friends" from="." to="移动路线/僚机2" method="_on__friends"]
+[connection signal="nofriends" from="." to="移动路线/僚机4" method="_on__nofriends"]
+[connection signal="nofriends" from="." to="移动路线/僚机5" method="_on__nofriends"]
+[connection signal="nofriends" from="." to="移动路线/僚机6" method="_on__nofriends"]
+[connection signal="nofriends" from="." to="移动路线/僚机1" method="_on__nofriends"]
+[connection signal="nofriends" from="." to="移动路线/僚机3" method="_on__nofriends"]
+[connection signal="nofriends" from="." to="移动路线/僚机2" method="_on__nofriends"]
 [connection signal="timeout" from="射击延时" to="." method="_on__timeout"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="timeout" from="无敌时间" to="." method="_on__timeout_ranbow"]
